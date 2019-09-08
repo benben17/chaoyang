@@ -4,11 +4,11 @@ package com.bank.manager.service.impl;
 
 import com.bank.manager.common.UserToken;
 import com.bank.manager.dao.UserDao;
-import com.bank.manager.domain.LdapUser;
-import com.bank.manager.domain.User;
+import com.bank.manager.domain.user.LdapUser;
+import com.bank.manager.domain.user.User;
 import com.bank.manager.mapper.LdapUserAttributeMapper;
 import com.bank.manager.service.UserService;
-import com.bank.manager.utils.SecurityUtils;
+import com.bank.manager.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createLdapUser(LdapUser ldapUser){
-        ldapUser.setUserPassword(SecurityUtils.LdapEncoderMd5(ldapUser.getUserPassword()));
+        ldapUser.setUserPassword(Md5Util.LdapEncoderMd5(ldapUser.getUserPassword()));
         try{
             ldapTemplate.create(ldapUser);
             return true;

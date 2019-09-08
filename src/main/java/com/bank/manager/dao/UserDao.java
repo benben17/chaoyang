@@ -1,6 +1,6 @@
 package com.bank.manager.dao;
 
-import com.bank.manager.domain.User;
+import com.bank.manager.domain.user.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

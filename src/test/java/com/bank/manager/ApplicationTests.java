@@ -1,16 +1,14 @@
 package com.bank.manager;
 
-import com.bank.manager.domain.LdapUser;
+import com.bank.manager.domain.user.LdapUser;
 import com.bank.manager.service.UserService;
-import com.bank.manager.utils.SecurityUtils;
+import com.bank.manager.utils.Md5Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Optional;
 
 
 @RunWith(SpringRunner.class)
@@ -32,7 +30,7 @@ public class ApplicationTests {
         ldapUser.setSn("benben17");
         ldapUser.setUid("benben17");
 //
-        String password = SecurityUtils.LdapEncoderMd5("7654321");
+        String password = Md5Util.LdapEncoderMd5("7654321");
         ldapUser.setUserPassword(password);
 //
 //       List<Person> users =  userService.getAllUser();

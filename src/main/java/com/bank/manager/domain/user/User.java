@@ -1,4 +1,4 @@
-package com.bank.manager.domain;
+package com.bank.manager.domain.user;
 
 import lombok.Getter;
 import lombok.Setter;

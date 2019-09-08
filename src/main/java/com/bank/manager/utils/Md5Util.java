@@ -1,6 +1,5 @@
 package com.bank.manager.utils;
 
-import jdk.nashorn.internal.runtime.regexp.JoniRegExp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -9,17 +8,18 @@ import sun.misc.BASE64Encoder;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * 加密工具
  */
-public class SecurityUtils {
+public class Md5Util {
 
-    private static Logger log = LoggerFactory.getLogger(SecurityUtils.class);
+    private static Logger log = LoggerFactory.getLogger(Md5Util.class);
     private static final String MD5 = "MD5";
     private static final String CHARSET = "utf-8";
-    private static char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
-            'f'};
+    private static char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+            'F'};
 
     /**
      * MD5摘要算法
@@ -74,5 +74,16 @@ public class SecurityUtils {
             return "";
         }
 
+    }
+
+    public static String getRandomString(int length) {
+        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
     }
 }

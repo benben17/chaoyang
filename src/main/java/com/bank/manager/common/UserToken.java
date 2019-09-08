@@ -1,6 +1,6 @@
 package com.bank.manager.common;
 
-import com.bank.manager.utils.SecurityUtils;
+import com.bank.manager.utils.Md5Util;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -14,7 +14,7 @@ public class UserToken {
      * @return token
      */
 	public static String getToken() {
-		return SecurityUtils.md5(UUID.randomUUID().toString() + System.currentTimeMillis());
+		return Md5Util.md5(UUID.randomUUID().toString() + System.currentTimeMillis());
 	}
 
 

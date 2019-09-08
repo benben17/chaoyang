@@ -1,0 +1,25 @@
+package com.bank.manager.dao;
+
+import com.bank.manager.domain.log.LoginLog;
+
+import java.util.Date;
+import java.util.List;
+
+public interface OperationLogDao {
+    /**
+     * 登陆日志保存
+     * @param loginLog
+     * @return
+     */
+    long insertLog(LoginLog loginLog);
+
+    /**
+     * 登陆日志查看
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<LoginLog> OperationLogList(Date startTime, Date endTime);
+
+
+}

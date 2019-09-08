@@ -1,4 +1,4 @@
-package com.bank.manager.domain;
+package com.bank.manager.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.ldap.odm.annotations.*;

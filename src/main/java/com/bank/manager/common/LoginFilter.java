@@ -1,13 +1,11 @@
 package com.bank.manager.common;
 
 
-import com.bank.manager.domain.LdapUser;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.UserService;
 import com.bank.manager.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.LoginLogDao">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.log.LoginLog">
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="log_type" property="logType"/>
+        <result column="log_name" property="logName"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="c_time" property="createTime"/>
+        <result column="msg" property="msg"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, user_id,log_type,log_name,ip_address,c_time,msg
+	</sql>
+    <insert id="loginLogInsert" parameterType="LoginLog">
+        insert into t_login_log (user_id,log_type,log_name,ip_address,c_time,msg)
+        values(#{userId},#{logType},#{logName},#{ipAddress},#{createTime},#{msg})
+    </insert>
+
+    <select id="LoginLogList" resultMap="BaseResultMap">
+        select refid="Base_Column_List"/>
+        from t_login_log log
+        left join  t_user u on u.id = log.user_id
+        where c_time between #{startTime} and #{endTime}
+    </select>
+</mapper>

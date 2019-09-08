@@ -1,6 +1,6 @@
 package com.bank.manager.mapper;
 
-import com.bank.manager.domain.LdapUser;
+import com.bank.manager.domain.user.LdapUser;
 import org.springframework.ldap.core.AttributesMapper;
 
 import javax.naming.NamingException;
