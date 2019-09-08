@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tupu.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.tupu.domain.sys.User">
+        <result column="id" property="id"/>
+        <result column="username" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="mobile" property="mobile"/>
+        <result column="token" property="token"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="c_time" property="createTime"/>
+        <result column="c_uid" property="createUid"/>
+        <result column="e_time" property="editTime"/>
+        <result column="e_uid" property="editUid"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, username,mobile,token,email,c_time,e_time,description
+	</sql>
+
+
+    <select id="getUserList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user where username != 'admin'
+    </select>
+    <select id="findById" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where id = #{id}
+    </select>
+
+    <insert id="saveUser" parameterType="User">
+		insert into
+			t_user(id,username,password,mobile,email,c_time,c_uid)
+		values
+			(#{id},#{userName},#{password},#{mobile},#{email},#{createTime},#{createUid})
+	</insert>
+
+    <update id="updateUser" parameterType="User">
+        update
+        t_user
+        set
+        <if test="userName!=null">
+            username = #{userName},
+        </if>
+        <if test="password!=null" >
+            password = #{password},
+        </if>
+        <if test="mobile!=null">
+            mobile = #{mobile},
+        </if>
+        <if test="editUid!=0">
+            `e_uid` = #{editUid},
+        </if>
+        <if test="email!=null">
+            email = #{email},
+        </if>
+
+        <if test="description!=null">
+            description = #{description},
+        </if>
+        <if test="editTime!=null">
+            e_time = #{editTime}
+        </if>
+        where
+        id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Long">
+		delete from
+			t_user
+		where
+			id = #{id}
+	</delete>
+
+    <delete id="deleteUsers" parameterType="java.lang.String">
+		delete from
+			t_user
+		where
+			id in( #{ids} )
+	</delete>
+
+    <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		count(*)
+		from t_user 
+		where username = #{userName}
+	</select>
+
+    <select id="findByToken" resultType="int">
+		select
+		count(*)
+		from t_user
+		where id = #{id} and token = #{token}
+	</select>
+
+    <select id="login" resultMap="BaseResultMap">
+		select
+		id,username
+		from t_user
+		where username = #{userName}
+	</select>
+
+
+    <update id="updateUserToken" parameterType="User">
+        update
+        t_user
+        set token = #{token},login_time=#{loginTime} where id = #{id}
+
+    </update>
+    <select id="checkUserName" parameterType="java.lang.String" resultType="INTEGER">
+		select
+		count(*)
+		from t_user
+		where username = #{userName}
+	</select>
+</mapper>
