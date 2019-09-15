@@ -1,8 +1,7 @@
 package com.bank.manager.dao;
 
-import com.bank.manager.domain.user.User;
+import com.bank.manager.domain.sys.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  *
  * Created by bysocket on 07/02/2017.
  */
-@Repository
+
 public interface UserDao {
 
     /**

@@ -4,13 +4,12 @@ package com.bank.manager.service.impl;
 
 import com.bank.manager.common.UserToken;
 import com.bank.manager.dao.UserDao;
-import com.bank.manager.domain.user.LdapUser;
-import com.bank.manager.domain.user.User;
+import com.bank.manager.domain.sys.LdapUser;
+import com.bank.manager.domain.sys.User;
 import com.bank.manager.mapper.LdapUserAttributeMapper;
 import com.bank.manager.service.UserService;
-import com.bank.manager.utils.Md5Util;
+import com.bank.manager.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.AndFilter;
 import org.springframework.ldap.filter.EqualsFilter;
@@ -27,14 +26,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LdapTemplate ldapTemplate;
 
-
-
     @Resource
     private UserDao userDao;
 
     @Override
     public boolean createLdapUser(LdapUser ldapUser){
-        ldapUser.setUserPassword(Md5Util.LdapEncoderMd5(ldapUser.getUserPassword()));
+        ldapUser.setUserPassword(SecurityUtil.LdapEncoderMd5(ldapUser.getUserPassword()));
         try{
             ldapTemplate.create(ldapUser);
             return true;
@@ -64,10 +61,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authLdapUser(String username,String pass){
+    public boolean authLdapUser(String username,String password){
         AndFilter filter = new AndFilter();
         filter.and(new EqualsFilter("objectclass", "person")).and(new EqualsFilter("cn", username));
-        return ldapTemplate.authenticate(DistinguishedName.EMPTY_PATH,filter.toString(),pass);
+        return ldapTemplate.authenticate("",filter.toString(),password);
     }
 
 
@@ -84,12 +81,13 @@ public class UserServiceImpl implements UserService {
                 loginUser.setToken(token);
                 loginUser.setLoginTime(new Date());
                 userDao.updateUserToken(loginUser);
+
             }else{
                 return null;
             }
+            return loginUser;
         }
-
-        return loginUser;
+        return  null;
     }
 
     @Override
@@ -142,12 +140,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkUserName(String userName) {
         int userNum = userDao.checkUserName(userName);
+        return userNum > 0;
 
-        if (userNum > 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
     private LdapUser setLdapUser(User user){
         LdapUser ldapUser = new LdapUser();

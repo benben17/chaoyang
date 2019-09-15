@@ -1,7 +1,7 @@
 package com.bank.manager.service;
 
-import com.bank.manager.domain.user.LdapUser;
-import com.bank.manager.domain.user.User;
+import com.bank.manager.domain.sys.LdapUser;
+import com.bank.manager.domain.sys.User;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface UserService {
 
     List<LdapUser> getLdapUsers();
 
-    boolean authLdapUser(String username, String pass);
+    boolean authLdapUser(String username, String password);
 
     User login(User user);
 

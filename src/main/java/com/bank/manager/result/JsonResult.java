@@ -88,7 +88,6 @@ public class JsonResult {
 
     public static JsonResult fail(Map<String,String> map) {
         JsonResult jsonResult = new JsonResult(ErrorCodeEnum.PARAM_ERROR.getCode(), "参数错误");
-
         jsonResult.setData(map);
         return jsonResult;
     }

@@ -1,4 +1,4 @@
-package com.bank.manager.domain.user;
+package com.bank.manager.domain.sys;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class User {
-    private long id;
+    private Long id;
     private String userName;
     private String password;
     private String mobile;

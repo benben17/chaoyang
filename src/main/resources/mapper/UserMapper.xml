@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bank.manager.dao.UserDao">
-    <resultMap id="BaseResultMap" type="com.bank.manager.domain.user.User">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.sys.User">
         <result column="id" property="id"/>
         <result column="username" property="userName"/>
         <result column="password" property="password"/>
@@ -32,14 +32,14 @@
         where id = #{id}
     </select>
 
-    <insert id="saveUser" parameterType="User">
+    <insert id="saveUser">
 		insert into
 			t_user(id,username,password,mobile,email,c_time,c_uid)
 		values
 			(#{id},#{userName},#{password},#{mobile},#{email},#{createTime},#{createUid})
 	</insert>
 
-    <update id="updateUser" parameterType="User">
+    <update id="updateUser">
         update
         t_user
         set
@@ -86,7 +86,7 @@
     <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
 		select
 		count(*)
-		from t_user 
+		from t_user
 		where username = #{userName}
 	</select>
 
@@ -105,7 +105,7 @@
 	</select>
 
 
-    <update id="updateUserToken" parameterType="User">
+    <update id="updateUserToken" >
         update
         t_user
         set token = #{token},login_time=#{loginTime} where id = #{id}

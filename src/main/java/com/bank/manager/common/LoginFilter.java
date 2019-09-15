@@ -1,11 +1,14 @@
 package com.bank.manager.common;
 
 
+import com.bank.manager.domain.sys.LdapUser;
+import com.bank.manager.domain.sys.User;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.UserService;
 import com.bank.manager.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -18,7 +21,7 @@ import java.io.PrintWriter;
 /**
  * Token 验证
  */
-//@Configuration
+@Configuration
 public class LoginFilter implements Filter {
     private static final Logger log = LoggerFactory.getLogger(LoginFilter.class);
 
@@ -50,7 +53,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
         String requestURI = httpServletRequest.getRequestURI();
-        if (requestURI.endsWith("/api/user/login")) {
+        if (requestURI.endsWith("/api/login")) {
             chain.doFilter(request, response);
             return;
         }
@@ -74,19 +77,19 @@ public class LoginFilter implements Filter {
             return;
         }
 
-//        LdapUser user = userService.auth(Long.valueOf(userId));
-//        if (user == null) {
-//            doErrorResponse((HttpServletResponse) response, "用户不存在");
-//            return;
-//        }
+        User user = userService.findUserById(Long.valueOf(userId));
+        if (user == null) {
+            doErrorResponse((HttpServletResponse) response, "用户不存在");
+            return;
+        }
 
-//        String realToken = user.getToken();
-//        boolean verifyToken = UserToken.verifyToken(inputToken, realToken);
-////        boolean verifyToken = userService.checkToken(long id,String token);
-//        if (!verifyToken) {
-//            doErrorResponse((HttpServletResponse) response, "非法Token");
-//            return;
-//        }
+        String realToken = user.getToken();
+        boolean verifyToken = UserToken.verifyToken(inputToken, realToken);
+//        boolean verifyToken = userService.checkToken(long id,String token);
+        if (!verifyToken) {
+            doErrorResponse((HttpServletResponse) response, "非法Token");
+            return;
+        }
 
         chain.doFilter(request, response);
     }

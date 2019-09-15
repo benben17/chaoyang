@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import sun.misc.BASE64Encoder;
 
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,9 +14,9 @@ import java.util.Random;
 /**
  * 加密工具
  */
-public class Md5Util {
+public class SecurityUtil {
 
-    private static Logger log = LoggerFactory.getLogger(Md5Util.class);
+    private static Logger log = LoggerFactory.getLogger(SecurityUtil.class);
     private static final String MD5 = "MD5";
     private static final String CHARSET = "utf-8";
     private static char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
@@ -64,11 +65,13 @@ public class Md5Util {
     }
 
 
+
     public static String LdapEncoderMd5(String psw) {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             BASE64Encoder base64en = new BASE64Encoder();
             String md5psw = base64en.encode(md5.digest(psw.getBytes("utf-8")));
+
             return "{MD5}" + md5psw;
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ignored) {
             return "";

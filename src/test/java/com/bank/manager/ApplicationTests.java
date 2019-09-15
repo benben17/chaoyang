@@ -1,8 +1,8 @@
 package com.bank.manager;
 
-import com.bank.manager.domain.user.LdapUser;
+import com.bank.manager.domain.sys.LdapUser;
 import com.bank.manager.service.UserService;
-import com.bank.manager.utils.Md5Util;
+import com.bank.manager.utils.SecurityUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,13 +25,13 @@ public class ApplicationTests {
 
     @Test
     public void save() throws Exception {
-        LdapUser ldapUser = new LdapUser();
-        ldapUser.setCn("benben17");
-        ldapUser.setSn("benben17");
-        ldapUser.setUid("benben17");
+//        LdapUser ldapUser = new LdapUser();
+//        ldapUser.setCn("benben17");
+//        ldapUser.setSn("benben17");
+//        ldapUser.setUid("benben17");
 //
-        String password = Md5Util.LdapEncoderMd5("7654321");
-        ldapUser.setUserPassword(password);
+//        String password = SecurityUtil.LdapEncoderMd5("7654321");
+//        ldapUser.setUserPassword(password);
 //
 //       List<Person> users =  userService.getAllUser();
 //       for(Person user:users){
@@ -45,7 +45,7 @@ public class ApplicationTests {
 //      }
 //    userService.deletePerson(ldapUser);
 //        userService.create(ldapUser);
-        boolean res = userService.auth("benben17","7654321");
+        boolean res = userService.authLdapUser("benben17","7654321");
         System.out.println(res);
     }
 }

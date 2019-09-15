@@ -4,16 +4,13 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.data.repository.CrudRepository;
 
 @SpringBootApplication
 @EnableConfigurationProperties
-@MapperScan("com.tupu.dao")
-public class ManagerApplication {
+@MapperScan("com.bank.manager.dao")
+public class App {
     public static void main(String[] args) {
-        SpringApplication.run(ManagerApplication.class, args);
+        SpringApplication.run(App.class, args);
     }
-
-
 
 }

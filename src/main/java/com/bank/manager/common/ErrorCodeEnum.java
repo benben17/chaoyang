@@ -9,7 +9,7 @@ package com.bank.manager.common;
 public enum ErrorCodeEnum {
     SYSTEM_ERROR(100000, "系统错误"),
     TOKEN_ERROR(100001, "Token错误"),
-    LOGIN_ERROR(100002, "登陆用户错误"),
+    LOGIN_ERROR(100002, "用户名或密码错误"),
     PARAM_ERROR(100003, "参数错误"),
     DATA_ERROR(100004, "数据重复"),
     DEPLOY_ERROR(100005, "部署失败"),

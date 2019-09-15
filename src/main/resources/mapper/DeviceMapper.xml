@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.DeviceDao">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.sys.Device">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="device_ip" property="deviceIp"/>
+        <result column="device_port" property="devicePort"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_stat" property="deviceStat"/>
+        <result column="device_status" property="deviceStatus"/>
+        <result column="c_time" property="createTime"/>
+        <result column="c_uid" property="createUid"/>
+        <result column="e_time" property="editTime"/>
+        <result column="e_uid" property="editUid"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, `name`,device_ip,device_port,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
+	</sql>
+    <insert id="saveDevice" useGeneratedKeys="true" keyProperty="id">
+        insert into t_device (`name`,device_ip,device_port,device_type,device_stat,device_status,c_time,c_uid)
+        values(#{name},#{deviceIp},#{devicePort},#{deviceType},#{deviceStat},#{deviceStatus},#{createTime},#{createUid})
+    </insert>
+
+
+    <update id="updateDevice" >
+        update t_device set
+        <if test="name!=null">
+            name = #{name},
+        </if>
+        <if test="deviceIp!=null">
+            device_ip = #{deviceIp},
+        </if>
+        <if test="devicePort!=null">
+            device_port = #{devicePort},
+        </if>
+        <if test="deviceType!=null">
+            device_type = #{deviceType},
+        </if>
+        <if test="deviceStat!=null">
+            device_stat = #{deviceStat},
+        </if>
+        <if test="deviceStatus!=null">
+            device_status = #{deviceStatus},
+        </if>
+
+        <if test="editUid!=0">
+            `e_uid` = #{deviceStat},
+        </if>
+        <if test="editTime!=null">
+            e_time = #{editTime}
+        </if>
+        where
+        id = #{id}
+    </update>
+    <select id="getDeviceList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_device where device_type = #{deviceType}
+    </select>
+    <delete id="deleteDevice" parameterType="java.util.List">
+        delete from t_device
+        where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="checkRepeat" resultType="INTEGER" parameterType="Device">
+        select count(id) from t_device
+        where device_ip=#{deviceIp} and device_port=#{devicePort} and id !=#{id}
+    </select>
+
+</mapper>

@@ -1,8 +1,4 @@
 package com.bank.manager.utils;
-
-import org.apache.commons.lang.text.StrTokenizer;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Pattern;
 
 /**
@@ -46,22 +42,5 @@ public class IpUtil {
         return PATTERN.matcher(ip).matches();
     }
 
-    public static String getIpFromRequest(HttpServletRequest request) {
-        String ip;
-        boolean found = false;
-        if ((ip = request.getHeader(X_FORWARDED_FOR)) != null) {
-            StrTokenizer tokenizer = new StrTokenizer(ip, ",");
-            while (tokenizer.hasNext()) {
-                ip = tokenizer.nextToken().trim();
-                if (isIPv4Valid(ip) && !isIPv4Private(ip)) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-        if (!found) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
+
 }
