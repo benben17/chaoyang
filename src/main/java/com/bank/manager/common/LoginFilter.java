@@ -47,6 +47,7 @@ public class LoginFilter implements Filter {
 
         if (!(request instanceof HttpServletRequest)) {
             doErrorResponse((HttpServletResponse) response, "非法请求");
+            log.error("非法请求");
             return;
         }
 

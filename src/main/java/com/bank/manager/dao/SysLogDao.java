@@ -1,17 +1,17 @@
 package com.bank.manager.dao;
 
-import com.bank.manager.domain.log.LoginLog;
+import com.bank.manager.domain.log.SysLog;
 
 import java.util.Date;
 import java.util.List;
 
-public interface OperationLogDao {
+public interface SysLogDao {
     /**
      * 登陆日志保存
-     * @param loginLog
+     * @param sysLog
      * @return
      */
-    long insertLog(LoginLog loginLog);
+    long insertLog(SysLog sysLog);
 
     /**
      * 登陆日志查看
@@ -19,7 +19,6 @@ public interface OperationLogDao {
      * @param endTime
      * @return
      */
-    List<LoginLog> OperationLogList(Date startTime, Date endTime);
-
+    List<SysLog> getOperationLogList(Date startTime, Date endTime, String logType);
 
 }

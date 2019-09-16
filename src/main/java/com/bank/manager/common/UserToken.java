@@ -14,6 +14,7 @@ public class UserToken {
      * @return token
      */
 	public static String getToken() {
+
 		return SecurityUtil.md5(UUID.randomUUID().toString() + System.currentTimeMillis());
 	}
 

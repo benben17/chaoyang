@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.SysLogDao">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.log.SysLog">
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="log_type" property="logType"/>
+        <result column="log_name" property="logName"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="successed" property="successed"/>
+        <result column="complete_time" property="completeTime"/>
+        <result column="c_time" property="createTime"/>
+        <result column="msg" property="msg"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, user_name,log_type,log_name,ip_address,successed,c_time,msg
+	</sql>
+    <insert id="insertLog" parameterType="SysLog">
+        insert into t_operation_log (user_name,log_type,log_name,ip_address,successed,c_time,msg)
+        values(#{userName},#{logType},#{logName},#{ipAddress},#{successed},#{createTime},#{msg})
+    </insert>
+
+    <select id="getOperationLogList" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/>
+        from t_operation_log
+        where c_time between #{startTime} and #{endTime}
+        <if test="logType !=99">
+            and log_type = #{logType}
+        </if>
+
+    </select>
+</mapper>
