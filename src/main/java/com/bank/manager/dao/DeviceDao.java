@@ -15,5 +15,7 @@ public interface DeviceDao {
     void deleteDevice(List<Long> deviceIds);
 
     int checkRepeat(Device device);
+    long updateToken(Device device);
+    Device getDeviceById(long id);
 
 }

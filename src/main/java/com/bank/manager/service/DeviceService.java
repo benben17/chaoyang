@@ -11,4 +11,6 @@ public interface DeviceService {
     List<Device> getDeviceList(long deviceType);
     boolean checkDeviceRepeat(Device device);
 
+    Device getDeviceById(long id);
+
 }

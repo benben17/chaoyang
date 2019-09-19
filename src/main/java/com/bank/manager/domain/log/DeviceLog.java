@@ -14,6 +14,15 @@ public class DeviceLog {
     private Date deviceReportedTime;
     private long facility;
     // 0表示紧急；1表示警报；2表示严重；3表示错误；4表示警告；5表示通告；6表示信息 99 所有
+    /**
+     * 0 Emergency
+     * 1 Alert
+     * 2 Critical
+     * 3 Error
+     * 4 Warning
+     * 5 Notice
+     * 6 Informational
+     **/
     private long priority;
     private String fromHost;
     private String message;

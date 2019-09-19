@@ -6,6 +6,10 @@
         <result column="name" property="name"/>
         <result column="device_ip" property="deviceIp"/>
         <result column="device_port" property="devicePort"/>
+        <result column="username" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="token" property="token"/>
+        <result column="cookie" property="cookie"/>
         <result column="device_type" property="deviceType"/>
         <result column="device_stat" property="deviceStat"/>
         <result column="device_status" property="deviceStatus"/>
@@ -16,15 +20,15 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-		id, `name`,device_ip,device_port,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
+		id, `name`,device_ip,device_port,username,password,token,cookie,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
 	</sql>
     <insert id="saveDevice" useGeneratedKeys="true" keyProperty="id">
-        insert into t_device (`name`,device_ip,device_port,device_type,device_stat,device_status,c_time,c_uid)
-        values(#{name},#{deviceIp},#{devicePort},#{deviceType},#{deviceStat},#{deviceStatus},#{createTime},#{createUid})
+        insert into t_device (`name`,device_ip,device_port,username,password,device_type,device_stat,device_status,c_time,c_uid)
+        values(#{name},#{deviceIp},#{devicePort},#{userName},#{password},#{deviceType},#{deviceStat},#{deviceStatus},#{createTime},#{createUid})
     </insert>
 
 
-    <update id="updateDevice" >
+    <update id="updateDevice">
         update t_device set
         <if test="name!=null">
             name = #{name},
@@ -34,6 +38,19 @@
         </if>
         <if test="devicePort!=null">
             device_port = #{devicePort},
+        </if>
+        <if test="userName!=null">
+            username = #{userName},
+        </if>
+        <if test="password!=null">
+            password = #{password},
+        </if>
+
+        <if test="token!=null">
+            token = #{token},
+        </if>
+        <if test="cookie!=null">
+            cookie = #{cookie},
         </if>
         <if test="deviceType!=null">
             device_type = #{deviceType},
@@ -46,7 +63,7 @@
         </if>
 
         <if test="editUid!=0">
-            `e_uid` = #{deviceStat},
+            `e_uid` = #{editUid},
         </if>
         <if test="editTime!=null">
             e_time = #{editTime}
@@ -54,6 +71,20 @@
         where
         id = #{id}
     </update>
+
+    <update id="updateToken" parameterType="Device">
+        update t_device set
+        <if test="token!=null">
+            token = #{token},
+        </if>
+        <if test="cookie!=null">
+            cookie = #{cookie},
+        </if>
+        where
+        id = #{id}
+
+    </update>
+
     <select id="getDeviceList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -71,5 +102,13 @@
         select count(id) from t_device
         where device_ip=#{deviceIp} and device_port=#{devicePort} and id !=#{id}
     </select>
+
+    <select id="getDeviceById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_device
+        where id = #{id}
+    </select>
+
 
 </mapper>

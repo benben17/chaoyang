@@ -48,4 +48,9 @@ public class DeviceServiceImpl implements DeviceService {
         int res = deviceDao.checkRepeat(device);
         return res != 0;
     }
+
+    @Override
+    public Device getDeviceById(long id) {
+        return deviceDao.getDeviceById(id);
+    }
 }

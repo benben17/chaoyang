@@ -22,7 +22,10 @@ public class Device {
 
     //启用 、禁用
     private String deviceStatus;
-
+    private String userName;
+    private String password;
+    private String token;
+    private String cookie;
     private long createUid;
     private Date createTime;
     private long editUid;

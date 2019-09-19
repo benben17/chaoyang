@@ -5,7 +5,9 @@ import com.bank.manager.domain.sys.Device;
 import com.bank.manager.domain.sys.User;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.DeviceService;
+import com.bank.manager.service.HillStoneService;
 import com.bank.manager.service.UserService;
+import com.bank.manager.utils.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -25,10 +27,30 @@ public class DeviceController {
     @Resource
     private DeviceService deviceService;
 
+    @Resource
+    private HillStoneService hillStoneService;
 
     @RequestMapping(value = "/api/device/{deviceType}", method = RequestMethod.GET)
     public JsonResult getDeviceList(@PathVariable("deviceType") long deviceType) {
         return JsonResult.success(deviceService.getDeviceList(deviceType));
+    }
+
+    @RequestMapping(value = "/api/device/test/{id}", method = RequestMethod.GET)
+    public JsonResult getDeviceById(@PathVariable("id") long id) {
+        Device device = deviceService.getDeviceById(id);
+        if (device.getDeviceType() == 1) {
+            String host = device.getDeviceIp() + ":" + device.getDevicePort();
+            Map<String, String> loginMap = hillStoneService.renewHillStoneToken(device.getUserName(), device.getPassword(), host);
+            if (loginMap.isEmpty()) {
+                return JsonResult.fail(200001, "连接失败");
+            }
+
+            device.setToken(loginMap.get("token"));
+            device.setCookie(loginMap.get("cookie"));
+            deviceService.updateDevice(device);
+            return JsonResult.success(null);
+        }
+        return JsonResult.success(null);
     }
 
     @RequestMapping(value = "/api/device", method = RequestMethod.POST)
@@ -37,7 +59,6 @@ public class DeviceController {
         if (deviceService.checkDeviceRepeat(device)) {
             return JsonResult.fail(ErrorCodeEnum.DATA_ERROR);
         }
-
         long res = deviceService.insertDevice(device);
         if (res > 0) {
             return JsonResult.success(null);
@@ -66,13 +87,26 @@ public class DeviceController {
         }
     }
 
+    @RequestMapping(value = "/api/device/info", method = RequestMethod.GET)
+    public JsonResult getDeviceInfo() {
+//      String urls = "http://192.168.0.129/rest/doc/policy";
+        Device device = deviceService.getDeviceById(12);
+//        String query = "/rest/api/devicemonitor?query={\"extraParams\":{\"monitorType\":\"status:cpu\"}}";
+        String query = "/rest/api/devicemonitor?query={\"extraParams\":{\"monitorType\":\"status:memory\"}}";
+        String urls = "http://" + device.getDeviceIp() + ":" + device.getDevicePort() + query;
+
+
+
+        return JsonResult.success(UrlUtils.urlGet(urls, device.getCookie()));
+
+
+    }
 
     private JsonResult validateId(Device device) {
         Map<String, String> errorMap = new HashMap<>();
-
         long deviceId = device.getId();
         if (StringUtils.isEmpty(deviceId) || deviceId == 0) {
-            errorMap.put("id", "名必填");
+            errorMap.put("id", "ID必填");
         }
 
         if (CollectionUtils.isEmpty(errorMap)) {
@@ -80,6 +114,5 @@ public class DeviceController {
         }
         return JsonResult.fail(errorMap);
     }
-
 
 }
