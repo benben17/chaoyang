@@ -5,7 +5,7 @@ package com.bank.manager.service.impl;
 import com.bank.manager.common.UserToken;
 import com.bank.manager.dao.UserDao;
 import com.bank.manager.domain.sys.LdapUser;
-import com.bank.manager.domain.sys.User;
+import com.bank.manager.domain.user.User;
 import com.bank.manager.mapper.LdapUserAttributeMapper;
 import com.bank.manager.service.UserService;
 import com.bank.manager.utils.SecurityUtil;

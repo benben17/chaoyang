@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bank.manager.dao.UserDao">
-    <resultMap id="BaseResultMap" type="com.bank.manager.domain.sys.User">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.user.User">
         <result column="id" property="id"/>
         <result column="username" property="userName"/>
         <result column="password" property="password"/>
@@ -18,7 +18,6 @@
     <sql id="Base_Column_List">
 		id, username,mobile,token,email,c_time,e_time,description
 	</sql>
-
 
     <select id="getUserList" resultMap="BaseResultMap">
         select

@@ -16,7 +16,6 @@ public class Device {
 
     //0zstack 1 防火墙 ,2:负载均衡
     private long deviceType;
-
     // 集群热备
     private String deviceStat;
 
@@ -24,11 +23,10 @@ public class Device {
     private String deviceStatus;
     private String userName;
     private String password;
-    private String token;
-    private String cookie;
+    private String type;
+
     private long createUid;
     private Date createTime;
     private long editUid;
-
     private Date editTime;
 }

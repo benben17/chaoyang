@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.RoleDao">
+    <resultMap id="BaseResultMap" type="com.bank.manager.domain.user.Role">
+        <result column="id" property="id"/>
+        <result column="role_name" property="RoleName"/>
+        <result column="access" property="access"/>
+        <result column="c_time" property="createTime"/>
+        <result column="c_uid" property="createUid"/>
+        <result column="e_time" property="editTime"/>
+        <result column="e_uid" property="editUid"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, role_name,access,c_time,e_time,c_uid,e_uid,description
+	</sql>
+
+    <insert id="saveRole" >
+        insert into t_tole (role_name,access,c_time,c_uid)
+        values
+        (#{roleName},#{access},#{createTime},#{createUid},)
+    </insert>
+    <select id="getRoleLIst" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+    </select>
+    <update id="updateRole" parameterType="Role">
+        update t_role
+        set
+        <if test="roleName!=null">
+            `role_name` = #{roleName},
+        </if>
+        <if test="access!=null">
+            `access` = #{access},
+        </if>
+        <if test="editUid!=0">
+            `e_uid` = #{editUid},
+        </if>
+        <if test="description!=null">
+            description = #{description},
+        </if>
+        <if test="editTime!=null">
+            e_time = #{editTime}
+        </if>
+        where id = #{id}
+    </update>
+    <delete id="deleteRoles" parameterType="java.util.List">
+        delete from t_role where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and id !=1
+    </delete>
+    <select id="getUserAccess" parameterType="Long" resultMap="BaseResultMap">
+        select role_name,access from t_role where id = #{id}
+    </select>
+
+    <select id="checkRoleName" parameterType="Role">
+        select count(id) from t_role where role_name = #{roleName} and id != #{id}
+    </select>
+</mapper>

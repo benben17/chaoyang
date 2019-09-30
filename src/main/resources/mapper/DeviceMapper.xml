@@ -8,8 +8,7 @@
         <result column="device_port" property="devicePort"/>
         <result column="username" property="userName"/>
         <result column="password" property="password"/>
-        <result column="token" property="token"/>
-        <result column="cookie" property="cookie"/>
+        <result column="type" property="type"/>
         <result column="device_type" property="deviceType"/>
         <result column="device_stat" property="deviceStat"/>
         <result column="device_status" property="deviceStatus"/>
@@ -20,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-		id, `name`,device_ip,device_port,username,password,token,cookie,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
+		id, `name`,device_ip,device_port,username,password,`type`,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
 	</sql>
     <insert id="saveDevice" useGeneratedKeys="true" keyProperty="id">
         insert into t_device (`name`,device_ip,device_port,username,password,device_type,device_stat,device_status,c_time,c_uid)
@@ -46,11 +45,8 @@
             password = #{password},
         </if>
 
-        <if test="token!=null">
-            token = #{token},
-        </if>
-        <if test="cookie!=null">
-            cookie = #{cookie},
+        <if test="type!=null">
+            `type` = #{type},
         </if>
         <if test="deviceType!=null">
             device_type = #{deviceType},
@@ -61,7 +57,6 @@
         <if test="deviceStatus!=null">
             device_status = #{deviceStatus},
         </if>
-
         <if test="editUid!=0">
             `e_uid` = #{editUid},
         </if>
@@ -72,18 +67,7 @@
         id = #{id}
     </update>
 
-    <update id="updateToken" parameterType="Device">
-        update t_device set
-        <if test="token!=null">
-            token = #{token},
-        </if>
-        <if test="cookie!=null">
-            cookie = #{cookie},
-        </if>
-        where
-        id = #{id}
-
-    </update>
+   
 
     <select id="getDeviceList" resultMap="BaseResultMap">
         select

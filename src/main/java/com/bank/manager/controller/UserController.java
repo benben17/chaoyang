@@ -2,8 +2,7 @@ package com.bank.manager.controller;
 
 
 import com.bank.manager.common.ErrorCodeEnum;
-import com.bank.manager.common.ErrorCodeEnum.*;
-import com.bank.manager.domain.sys.User;
+import com.bank.manager.domain.user.User;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.UserService;
 import org.slf4j.Logger;

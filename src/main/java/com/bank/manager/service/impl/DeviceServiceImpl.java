@@ -29,6 +29,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public void deleteDevice(List<Long> ids) {
+
         deviceDao.deleteDevice(ids);
     }
 

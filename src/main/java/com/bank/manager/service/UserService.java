@@ -1,7 +1,7 @@
 package com.bank.manager.service;
 
 import com.bank.manager.domain.sys.LdapUser;
-import com.bank.manager.domain.sys.User;
+import com.bank.manager.domain.user.User;
 
 import java.util.List;
 

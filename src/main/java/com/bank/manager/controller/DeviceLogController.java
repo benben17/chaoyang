@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @ResponseBody
 public class DeviceLogController {
-    final static Logger log = LoggerFactory.getLogger(UserController.class);
+    final static Logger log = LoggerFactory.getLogger(DeviceLogController.class);
     @Resource
     private DeviceLogService deviceLogService;
 

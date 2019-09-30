@@ -1,8 +1,7 @@
 package com.bank.manager.common;
 
 
-import com.bank.manager.domain.sys.LdapUser;
-import com.bank.manager.domain.sys.User;
+import com.bank.manager.domain.user.User;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.UserService;
 import com.bank.manager.utils.JsonUtils;
