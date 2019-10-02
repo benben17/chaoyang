@@ -1,4 +1,4 @@
-package com.bank.manager.service;
+package com.bank.manager.service.sys;
 
 import com.bank.manager.domain.sys.LdapUser;
 import com.bank.manager.domain.user.User;
@@ -41,7 +41,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    void saveUser(User user);
+    boolean saveUser(User user);
 
     /**
      * 更新用户信息

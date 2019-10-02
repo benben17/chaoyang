@@ -22,8 +22,8 @@
 		id, `name`,device_ip,device_port,username,password,`type`,device_type,device_stat,device_status,c_time,c_uid,e_time,e_uid
 	</sql>
     <insert id="saveDevice" useGeneratedKeys="true" keyProperty="id">
-        insert into t_device (`name`,device_ip,device_port,username,password,device_type,device_stat,device_status,c_time,c_uid)
-        values(#{name},#{deviceIp},#{devicePort},#{userName},#{password},#{deviceType},#{deviceStat},#{deviceStatus},#{createTime},#{createUid})
+        insert into t_device (`name`,device_ip,`type`,device_port,username,password,device_type,device_stat,device_status,c_time,c_uid)
+        values(#{name},#{deviceIp},#{type},#{devicePort},#{userName},#{password},#{deviceType},#{deviceStat},#{deviceStatus},#{createTime},#{createUid})
     </insert>
 
 
@@ -67,7 +67,6 @@
         id = #{id}
     </update>
 
-   
 
     <select id="getDeviceList" resultMap="BaseResultMap">
         select

@@ -2,9 +2,11 @@ package com.bank.manager.controller;
 
 
 import com.bank.manager.common.ErrorCodeEnum;
+import com.bank.manager.domain.user.Role;
 import com.bank.manager.domain.user.User;
 import com.bank.manager.result.JsonResult;
-import com.bank.manager.service.UserService;
+import com.bank.manager.service.sys.RoleService;
+import com.bank.manager.service.sys.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +26,8 @@ public class UserController {
     final static Logger log = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
+    @Resource
+    private RoleService roleService;
 
     /**
      * 用户登陆
@@ -37,7 +41,12 @@ public class UserController {
         if (loginUser == null) {
             return JsonResult.fail(ErrorCodeEnum.LOGIN_ERROR);
         }
-        return JsonResult.success(loginUser);
+        Map<String,Object> userInfo = new HashMap<>();
+        userInfo.put("user",loginUser);
+
+        Role userRole =roleService.getUserAccess(loginUser.getRoleId());
+        userInfo.put("userRole",userRole);
+        return JsonResult.success(userInfo);
 
 
     }
@@ -73,8 +82,12 @@ public class UserController {
         }
         boolean result = userService.checkUserName(user.getUserName());
         if (!result) {
-            userService.saveUser(user);
-            return JsonResult.success(null);
+            if(userService.saveUser(user)){
+                return JsonResult.success(null);
+            }else{
+                return JsonResult.fail(ErrorCodeEnum.DATA_ERROR);
+            }
+
         } else {
             return JsonResult.fail(ErrorCodeEnum.DATA_ERROR);
         }

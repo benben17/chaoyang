@@ -1,6 +1,7 @@
 package com.bank.manager.controller;
 
 import com.bank.manager.common.CommonUtils;
+import com.bank.manager.domain.sys.Device;
 import com.bank.manager.result.JsonResult;
 import com.bank.manager.service.DeviceLogService;
 import com.bank.manager.service.DeviceService;
@@ -19,13 +20,18 @@ public class DeviceLogController {
     @Resource
     private DeviceLogService deviceLogService;
 
-    @RequestMapping(value = "/api/device/log/{startTime}/{endTime}/{fromHost}/{priority}", method = RequestMethod.GET)
+    @Resource
+    private DeviceService deviceService;
+
+
+    @RequestMapping(value = "/api/device/log/{startTime}/{endTime}/{deviceId}/{priority}", method = RequestMethod.GET)
     public JsonResult deleteDevice(@PathVariable("startTime") String startTime,
                                    @PathVariable("endTime") String endTime,
-                                   @PathVariable("fromHost") String fromHost,
+                                   @PathVariable("deviceId") long deviceId,
                                    @PathVariable("priority") long priority) {
-
-        log.info(String.format("search device log %s-%s %s %s ", startTime,endTime,fromHost,priority));
+        Device device = deviceService.getDeviceById(deviceId);
+        String fromHost =device.getDeviceIp();
+        log.info(String.format("search device log %s-%s %s %s ", startTime, endTime, fromHost, priority));
         return JsonResult.success(deviceLogService.getDeviceLogList(CommonUtils.strToDateLong(startTime),
                 CommonUtils.strToDateLong(endTime), fromHost, priority));
     }

@@ -9,6 +9,6 @@ public interface SysLogService {
 
     long saveLog(SysLog sysLog);
 
-    List<SysLog> getLogList(Date startTime, Date endTime, String logType);
+    List<SysLog> getLogList(String startTime, String endTime);
 
 }

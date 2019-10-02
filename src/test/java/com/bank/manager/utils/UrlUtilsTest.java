@@ -1,21 +1,15 @@
 package com.bank.manager.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.bank.manager.service.UserService;
+import com.bank.manager.common.CommonUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import sun.misc.BASE64Encoder;
 
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,7 +43,7 @@ public class UrlUtilsTest {
 //        String urls = "http://192.168.0.129/rest/doc/policy";
 //        urlUtils.urlGet(urls,cookie);
 
-
+        System.out.println(CommonUtils.getBeforeTime(-20));
 
 
     }

@@ -1,4 +1,4 @@
-package com.bank.manager.dao.device;
+package com.bank.manager.dao.sys;
 
 import com.bank.manager.domain.sys.Bank;
 import com.bank.manager.domain.sys.Device;

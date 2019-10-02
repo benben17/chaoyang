@@ -12,16 +12,17 @@ import java.util.Date;
 @Getter
 @Setter
 public class User {
-    private Long id;
+    private long id;
     private long roleId;
+    private String roleName;
     private String userName;
     private String password;
     private String mobile;
     private String email;
     private String token;
     private Date loginTime;
-    private Long createUid;
-    private Long editUid;
+    private long createUid;
+    private long editUid;
     private Date createTime;
     private Date editTime;
     private String description;

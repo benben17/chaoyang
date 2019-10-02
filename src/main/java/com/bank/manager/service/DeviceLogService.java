@@ -1,6 +1,6 @@
 package com.bank.manager.service;
 
-import com.bank.manager.dao.device.DeviceLogDao;
+import com.bank.manager.dao.DeviceLogDao;
 
 import java.util.Date;
 import java.util.List;

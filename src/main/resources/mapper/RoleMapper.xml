@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bank.manager.dao.RoleDao">
+<mapper namespace="com.bank.manager.dao.sys.RoleDao">
     <resultMap id="BaseResultMap" type="com.bank.manager.domain.user.Role">
         <result column="id" property="id"/>
-        <result column="role_name" property="RoleName"/>
+        <result column="role_name" property="roleName"/>
         <result column="access" property="access"/>
         <result column="c_time" property="createTime"/>
         <result column="c_uid" property="createUid"/>
@@ -16,16 +16,22 @@
 		id, role_name,access,c_time,e_time,c_uid,e_uid,description
 	</sql>
 
-    <insert id="saveRole" >
-        insert into t_tole (role_name,access,c_time,c_uid)
-        values
-        (#{roleName},#{access},#{createTime},#{createUid},)
+    <insert id="insertRole" >
+        insert into t_role (role_name,access,c_time,c_uid,description)
+        values(#{roleName},#{access},#{createTime},#{createUid},#{description})
     </insert>
-    <select id="getRoleLIst" resultMap="BaseResultMap">
+    <select id="getRoleList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_role
     </select>
+
+    <select id="getRoleAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+    </select>
+
     <update id="updateRole" parameterType="Role">
         update t_role
         set
@@ -57,7 +63,7 @@
         select role_name,access from t_role where id = #{id}
     </select>
 
-    <select id="checkRoleName" parameterType="Role">
+    <select id="checkRoleName" parameterType="Role" resultType="Long">
         select count(id) from t_role where role_name = #{roleName} and id != #{id}
     </select>
 </mapper>

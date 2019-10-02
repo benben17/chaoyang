@@ -5,6 +5,8 @@
         <result column="id" property="id"/>
         <result column="username" property="userName"/>
         <result column="password" property="password"/>
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
         <result column="mobile" property="mobile"/>
         <result column="token" property="token"/>
         <result column="login_time" property="loginTime"/>
@@ -16,26 +18,29 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-		id, username,mobile,token,email,c_time,e_time,description
+		u.id id, u.username,u.mobile,u.role_id,r.role_name ,u.token,u.email,u.c_time,u.e_time,u.description
 	</sql>
 
     <select id="getUserList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_user where username != 'admin'
+        from t_user u
+        left join t_role r on u.role_id = r.id
+        where u.username != 'admin'
     </select>
     <select id="findById" resultMap="BaseResultMap" parameterType="long">
         select
         <include refid="Base_Column_List"/>
-        from t_user
-        where id = #{id}
+        from t_user u
+        left join t_role r on u.role_id = r.id
+        where u.id = ${id}
     </select>
 
     <insert id="saveUser">
 		insert into
-			t_user(id,username,password,mobile,email,c_time,c_uid)
+			t_user(id,username,password,role_id,mobile,email,c_time,c_uid)
 		values
-			(#{id},#{userName},#{password},#{mobile},#{email},#{createTime},#{createUid})
+			(#{id},#{userName},#{password},#{roleId},#{mobile},#{email},#{createTime},#{createUid})
 	</insert>
 
     <update id="updateUser">
@@ -47,6 +52,9 @@
         </if>
         <if test="password!=null" >
             password = #{password},
+        </if>
+        <if test="roleId!=0">
+            `role_id` = #{roleId},
         </if>
         <if test="mobile!=null">
             mobile = #{mobile},
@@ -98,11 +106,13 @@
 
     <select id="login" resultMap="BaseResultMap">
 		select
-		id,username
+		id,username,role_id
 		from t_user
 		where username = #{userName}
 	</select>
-
+    <select id="checkAdmin" parameterType="User" resultType="INTEGER">
+        select count(id) from t_user where username = #{userName} and password = #{password}
+    </select>
 
     <update id="updateUserToken" >
         update
@@ -116,4 +126,7 @@
 		from t_user
 		where username = #{userName}
 	</select>
+    <delete id="deleteByUsername" parameterType="java.lang.String">
+        delete from t_user where username = #{userName}
+    </delete>
 </mapper>

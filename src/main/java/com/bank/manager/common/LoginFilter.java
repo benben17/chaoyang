@@ -3,7 +3,7 @@ package com.bank.manager.common;
 
 import com.bank.manager.domain.user.User;
 import com.bank.manager.result.JsonResult;
-import com.bank.manager.service.UserService;
+import com.bank.manager.service.sys.UserService;
 import com.bank.manager.utils.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

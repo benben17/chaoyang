@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bank.manager.dao.device.DeviceLogDao">
+<mapper namespace="com.bank.manager.dao.DeviceLogDao">
     <resultMap id="BaseResultMap" type="com.bank.manager.domain.log.DeviceLog">
-        <result column="id" property="id"/>
-        <result column="deviceReportedTime" property="deviceReportedTime"/>
-        <result column="facility" property="facility"/>
-        <result column="priority" property="priority"/>
-        <result column="fromHost" property="fromHost"/>
-        <result column="message" property="message"/>
-        <result column="syslogTag" property="syslogTag"/>
-
+        <result column="ID" property="id"/>
+        <result column="DeviceRportedTime" property="reportedTime"/>
+        <result column="Facility" property="facility"/>
+        <result column="Priority" property="priority"/>
+        <result column="FromHost" property="fromHost"/>
+        <result column="Message" property="message"/>
+        <result column="SyslogTag" property="syslogTag"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-		id, deviceReportedTime,facility,priority,fromHost,message,syslogTag
+		id, DeviceRportedTime,Facility,Priority,FromHost,Message,syslogTag
 	</sql>
     <select id="getDeviceLogList" resultMap="BaseResultMap">
         select

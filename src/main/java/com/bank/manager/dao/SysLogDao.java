@@ -19,6 +19,6 @@ public interface SysLogDao {
      * @param endTime
      * @return
      */
-    List<SysLog> getOperationLogList(Date startTime, Date endTime, String logType);
+    List<SysLog> getOperationLogList(String startTime, String  endTime);
 
 }

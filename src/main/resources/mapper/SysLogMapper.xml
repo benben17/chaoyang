@@ -25,9 +25,5 @@
         select  <include refid="Base_Column_List"/>
         from t_operation_log
         where c_time between #{startTime} and #{endTime}
-        <if test="logType !=99">
-            and log_type = #{logType}
-        </if>
-
     </select>
 </mapper>

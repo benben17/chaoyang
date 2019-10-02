@@ -22,7 +22,7 @@ public class SysLogServiceImpl implements SysLogService {
     }
 
     @Override
-    public List<SysLog> getLogList(Date startTime, Date endTime, String logType) {
-        return sysLogDao.getOperationLogList(startTime,endTime,logType);
+    public List<SysLog> getLogList(String startTime, String endTime) {
+        return sysLogDao.getOperationLogList(startTime,endTime);
     }
 }

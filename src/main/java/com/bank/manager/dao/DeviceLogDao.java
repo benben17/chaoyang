@@ -1,4 +1,4 @@
-package com.bank.manager.dao.device;
+package com.bank.manager.dao;
 
 import java.util.Date;
 import java.util.List;

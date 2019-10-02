@@ -14,12 +14,13 @@ import java.util.Date;
 @Setter
 @Data
 public class Role {
-    private Long id;
+    private long id;
     private String roleName;
     private String access;
-    private Long createUid;
-    private Long editUid;
+    private long createUid;
+    private long editUid;
     private Date createTime;
     private Date editTime;
+    private  String description;
 
 }

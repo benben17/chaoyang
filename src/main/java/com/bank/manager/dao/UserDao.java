@@ -37,4 +37,8 @@ public interface UserDao {
 
     int checkUserName(String userName);
 
+    int checkAdmin(User user);
+
+    long deleteByUserName(String userName);
+
 }

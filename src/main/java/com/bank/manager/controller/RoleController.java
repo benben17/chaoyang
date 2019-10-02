@@ -1,12 +1,10 @@
 package com.bank.manager.controller;
 
 import com.bank.manager.common.ErrorCodeEnum;
-import com.bank.manager.domain.sys.Device;
 import com.bank.manager.domain.user.Role;
-import com.bank.manager.domain.user.User;
 import com.bank.manager.result.JsonResult;
 
-import com.bank.manager.service.RoleService;
+import com.bank.manager.service.sys.RoleService;
 
 
 import org.slf4j.Logger;
@@ -30,13 +28,14 @@ public class RoleController {
     private RoleService roleService;
 
 
-    @RequestMapping(value = "/api/role", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/user/role", method = RequestMethod.GET)
     public JsonResult getRoleLists() {
         log.info("aaaa");
         return JsonResult.success(roleService.getRoleList());
     }
 
-    @RequestMapping(value = "/api/role", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/api/user/role", method = RequestMethod.POST)
     public JsonResult saveDevice(@RequestBody Role role) {
         JsonResult validateResult = addValidate(role);
         if (!validateResult.isSuccess()) {
@@ -55,13 +54,13 @@ public class RoleController {
         }
     }
 
-    @RequestMapping(value = "/api/role", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/user/role", method = RequestMethod.DELETE)
     public JsonResult deleteRoles(@RequestBody List<Long> ids) {
         roleService.deleteRoles(ids);
         return JsonResult.success(null);
     }
 
-    @RequestMapping(value = "/api/role", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/user/role", method = RequestMethod.PUT)
     public JsonResult updateDevice(@RequestBody Role role) {
         JsonResult validateResult = validateRoleId(role);
         if (!validateResult.isSuccess()) {

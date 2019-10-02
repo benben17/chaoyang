@@ -1,8 +1,7 @@
 package com.bank.manager;
 
-import com.bank.manager.domain.sys.LdapUser;
-import com.bank.manager.service.UserService;
-import com.bank.manager.utils.SecurityUtil;
+import com.bank.manager.domain.user.User;
+import com.bank.manager.service.sys.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +23,7 @@ public class ApplicationTests {
 
 
     @Test
-    public void save() throws Exception {
+    public void check() throws Exception {
 //        LdapUser ldapUser = new LdapUser();
 //        ldapUser.setCn("benben17");
 //        ldapUser.setSn("benben17");
@@ -45,7 +44,10 @@ public class ApplicationTests {
 //      }
 //    userService.deletePerson(ldapUser);
 //        userService.create(ldapUser);
-        boolean res = userService.authLdapUser("benben17","7654321");
+        User user = new User();
+        user.setUserName("admin");
+        user.setPassword("123456");
+        User res = userService.login(user);
         System.out.println(res);
     }
 }

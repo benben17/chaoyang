@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.device.F5Dao">
+    <select id="getVsInfo" resultType="map">
+        select vs_name,vs_ip,vs_state,vs_conn,pool_name,server_name,server_state
+        from t_f5_vs_info where device_ip =#{deviceIp}
+    </select>
+
+    <select id="getVsStatus" resultType="map">
+        select
+        <choose>
+            <when  test="deviceIp!=null">
+                vs_name,connections,net_in,net_out,date_format(c_time,'%H:%i') time
+            </when>
+            <otherwise>
+                vs_name,sum(connections) connections,sum(net_in) net_in, sum(net_out) net_out,
+                date_format(c_time,'%H:%i') time
+            </otherwise>
+        </choose>
+        from t_f5_vs_stat where  c_time >= #{startTime}
+        <if test="deviceIp!=null">
+        and device_ip = #{deviceIp}
+        </if>
+        group by vs_name
+        <if test="deviceIp!=null">
+            ,device_ip
+        </if>
+        ,time
+    </select>
+    <select id="getRequestFail" resultType="map">
+        select count(id) count, client_ip,virtual_name,virtual_ip,virtual_pool_name,virtual_port,server_ip,server_port
+        from t_request_log
+        where insert_time >=#{startTime} and  http_statcode >=399
+        group by client_ip
+    </select>
+
+    <select id="getRequestSuccess" resultType="map">
+        select count(id) count,
+        client_ip,
+        virtual_name,
+        virtual_ip,
+        virtual_pool_name,
+        virtual_port,
+        server_ip,
+        server_port,
+        avg(response_time) response_time,
+        sum(response_size)/1024/8 response_size
+        from t_request_log
+        where insert_time >=#{startTime} and  http_statcode &lt;= 399
+        group by client_ip
+    </select>
+    
+    <select id="getRequestRate" resultType="map">
+        select virtual_name,avg(success_rate) success_rate
+        from t_f5_access_status
+        where c_time >=#{startTime}
+        group by virtual_name
+    </select>
+</mapper>

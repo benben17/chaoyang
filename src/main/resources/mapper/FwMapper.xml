@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bank.manager.dao.device.FwDao">
+
+    <select id="getAttackNum" resultType="map" >
+         select sum(attack_num) attackNum from t_threat where  c_time >= #{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+
+    </select>
+
+    <select id="getDeviceLoad" resultType="map">
+        select avg(cpu) cpu,avg(memory) memory,sum(sessions) sessions
+        from t_device_load where c_time >= #{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+    </select>
+    <select id="getThreat" resultType="map">
+        select sum(attack_num) attackNum,severity severity
+        ,case
+        when severity = "低" then 1
+        when severity = "中" then 2
+        when severity = "高" then 3
+        when severity = "严重" then 4
+        end  as threatLevel
+        from t_threat where c_time >=#{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+        group by severity;
+    </select>
+    <select id="getNetwork" resultType="map">
+        select sum(up_traffic) netIn ,sum(down_traffic) netOut ,
+        date_format(c_time,'%H:%i') ymd
+        from t_total_stream where
+        c_time >=#{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+        group by ymd
+    </select>
+    <select id="getTop10Threat" resultType="map">
+        select date_format(end_time,'%Y-%m-%d %H:%i%S') endTime,name ip,sum(attack_num) attackNum
+        from t_threat where
+        c_time >= #{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+        group by sip;
+    </select>
+    <select id="getTop10App" resultType="map">
+        select sum(total_stream) totalStream ,app_type appType,app_sub_type subType,app_name appName
+        from t_app_rank
+        where c_time >= #{startTime}
+        <if test="deviceIp!=null">
+            and device_ip = #{deviceIp}
+        </if>
+        group by app_type,app_sub_type
+        order by total_stream desc;
+    </select>
+</mapper>

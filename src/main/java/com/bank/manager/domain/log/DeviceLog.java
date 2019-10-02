@@ -10,9 +10,9 @@ import java.util.Date;
 @Getter
 @Setter
 public class DeviceLog {
-    private long id;
-    private Date deviceReportedTime;
-    private long facility;
+    private long ID;
+    private Date DeviceRportedTime;
+    private long Facility;
     // 0表示紧急；1表示警报；2表示严重；3表示错误；4表示警告；5表示通告；6表示信息 99 所有
     /**
      * 0 Emergency
@@ -23,9 +23,9 @@ public class DeviceLog {
      * 5 Notice
      * 6 Informational
      **/
-    private long priority;
-    private String fromHost;
-    private String message;
-    private String syslogTag;
+    private long Priority;
+    private String FromHost;
+    private String Message;
+    private String SyslogTag;
 
 }

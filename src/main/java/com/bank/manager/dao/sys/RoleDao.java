@@ -1,4 +1,4 @@
-package com.bank.manager.dao;
+package com.bank.manager.dao.sys;
 
 import com.bank.manager.domain.user.Role;
 
@@ -10,7 +10,7 @@ public interface RoleDao {
      * @return
      */
     List<Role> getRoleList();
-
+    List<Role> getRoleAll();
     /**
      * get user role
      * @param id id
@@ -21,4 +21,5 @@ public interface RoleDao {
     long insertRole(Role role);
     long deleteRoles(List ids);
     long checkRoleName(Role role);
+
 }

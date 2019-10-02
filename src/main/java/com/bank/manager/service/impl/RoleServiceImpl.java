@@ -1,8 +1,8 @@
 package com.bank.manager.service.impl;
 
-import com.bank.manager.dao.RoleDao;
+import com.bank.manager.dao.sys.RoleDao;
 import com.bank.manager.domain.user.Role;
-import com.bank.manager.service.RoleService;
+import com.bank.manager.service.sys.RoleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +17,11 @@ public class RoleServiceImpl  implements RoleService {
     @Override
     public List<Role> getRoleList() {
         return roleDao.getRoleList();
+    }
+
+    @Override
+    public List<Role> getRoleAll() {
+        return roleDao.getRoleAll();
     }
 
     @Override

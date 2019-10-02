@@ -1,6 +1,6 @@
 package com.bank.manager.service.impl;
 
-import com.bank.manager.dao.device.DeviceLogDao;
+import com.bank.manager.dao.DeviceLogDao;
 import com.bank.manager.service.DeviceLogService;
 import org.springframework.stereotype.Service;
 
