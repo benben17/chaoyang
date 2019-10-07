@@ -19,8 +19,8 @@ public class F5ServiceImpl implements F5Service {
     }
 
     @Override
-    public List<Map<String, String>> getVsStatus(String startTime,String deviceIp) {
-        return f5Dao.getVsStatus(startTime,deviceIp);
+    public List<Map<String, String>> getVsStatus(String startTime,String deviceIp,String vsName) {
+        return f5Dao.getVsStatus(startTime,deviceIp,vsName);
     }
 
     @Override
@@ -29,11 +29,16 @@ public class F5ServiceImpl implements F5Service {
     }
 
     @Override
-    public List<Map<String, String>> getRequestSuccess(String startTime) {
-        return f5Dao.getRequestSuccess(startTime);
+    public List<Map<String, String>> getRequestSuccess(String startTime,String vsName) {
+        return f5Dao.getRequestSuccess(startTime,vsName);
     }
     @Override
-    public List<Map<String, String>> getRequestRate(String startTime) {
-        return f5Dao.getRequestRate(startTime);
+    public List<Map<String, String>> getRequestRate(String startTime, String vsName) {
+        return f5Dao.getRequestRate(startTime,vsName);
+    }
+
+    @Override
+    public List<Map<String, String>> getVsRate(String startTime, String deviceIp) {
+        return f5Dao.getVsRate(startTime,deviceIp);
     }
 }

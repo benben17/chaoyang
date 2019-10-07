@@ -15,7 +15,7 @@ public class FwServiceImpl  implements FwService {
     FwDao fwDao;
 
     @Override
-    public Map<String,String> getAttackNum(String startTime,String deviceIp){
+    public List<Map<String,String>> getAttackNum(String startTime,String deviceIp){
         return fwDao.getAttackNum(startTime,deviceIp);
     }
 
@@ -35,8 +35,8 @@ public class FwServiceImpl  implements FwService {
     }
 
     @Override
-    public List<Map<String, String>> getTop10Threat(String startTime, String deviceIp) {
-        return fwDao.getTop10Threat(startTime,deviceIp);
+    public List<Map<String, String>> getTop10User(String startTime, String deviceIp) {
+        return fwDao.getTop10User(startTime,deviceIp);
     }
 
     @Override

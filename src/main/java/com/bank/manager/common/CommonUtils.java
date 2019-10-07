@@ -41,6 +41,11 @@ public class CommonUtils {
         return df.format(new Date());
     }
 
+    public static String getToday() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        return df.format(new Date());
+    }
+
 
     public static String encoding() {
         return "utf-8";
@@ -58,6 +63,8 @@ public class CommonUtils {
             startTime = CommonUtils.getBeforeTime(-120);
         } else if (type == 3) {  //4小时
             startTime= CommonUtils.getBeforeTime(-240);
+        }else if (type == 4) {  //4小时
+            startTime= getToday();
         }
         return startTime;
     }

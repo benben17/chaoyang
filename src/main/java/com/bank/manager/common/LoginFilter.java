@@ -42,7 +42,7 @@ public class LoginFilter implements Filter {
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "PUT,DELETE,POST,GET,OPTIONS");
         res.setHeader("Access-Control-Max-Age", "3600");
-        res.setHeader("Access-Control-Allow-Headers", "authorization,Content-Type,Accept");
+        res.setHeader("Access-Control-Allow-Headers", "AUTH,Content-Type,Accept");
 
         if (!(request instanceof HttpServletRequest)) {
             doErrorResponse((HttpServletResponse) response, "非法请求");
@@ -58,7 +58,7 @@ public class LoginFilter implements Filter {
             return;
         }
 
-        String authorization = httpServletRequest.getHeader("authorization");
+        String authorization = httpServletRequest.getHeader("AUTH");
         if (StringUtils.isEmpty(authorization)) {
             doErrorResponse((HttpServletResponse) response, "无登陆参数");
             return;

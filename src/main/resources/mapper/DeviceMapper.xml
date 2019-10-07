@@ -71,7 +71,7 @@
     <select id="getDeviceList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from t_device where device_type = #{deviceType}
+        from t_device where type = #{deviceType}
     </select>
     <delete id="deleteDevice" parameterType="java.util.List">
         delete from t_device

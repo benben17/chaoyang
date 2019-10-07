@@ -3,7 +3,7 @@
 <mapper namespace="com.bank.manager.dao.DeviceLogDao">
     <resultMap id="BaseResultMap" type="com.bank.manager.domain.log.DeviceLog">
         <result column="ID" property="id"/>
-        <result column="DeviceRportedTime" property="reportedTime"/>
+        <result column="DeviceReportedTime" property="reportedTime"/>
         <result column="Facility" property="facility"/>
         <result column="Priority" property="priority"/>
         <result column="FromHost" property="fromHost"/>
@@ -13,7 +13,7 @@
 
 
     <sql id="Base_Column_List">
-		id, DeviceRportedTime,Facility,Priority,FromHost,Message,syslogTag
+		DeviceReportedTime,Facility,Priority,FromHost,Message,syslogTag
 	</sql>
     <select id="getDeviceLogList" resultMap="BaseResultMap">
         select
@@ -24,6 +24,7 @@
         <if test="priority !=99">
             and priority = #{priority}
         </if>
+        order by ID desc
 
 
     </select>

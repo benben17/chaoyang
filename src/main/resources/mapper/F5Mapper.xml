@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bank.manager.dao.device.F5Dao">
-    <select id="getVsInfo" resultType="map">
+    <select id="getVsInfo" resultType="map" parameterType="java.lang.String">
         select vs_name,vs_ip,vs_state,vs_conn,pool_name,server_name,server_state
-        from t_f5_vs_info where device_ip =#{deviceIp}
+        from t_f5_vs_info
+        <if test="deviceIp!=null">
+            where device_ip =#{deviceIp}
+        </if>
+
+
     </select>
 
-    <select id="getVsStatus" resultType="map">
+    <select id="getVsStatus" resultType="map" parameterType="java.lang.String">
         select
         <choose>
-            <when  test="deviceIp!=null">
+            <when test="deviceIp!=null">
                 vs_name,connections,net_in,net_out,date_format(c_time,'%H:%i') time
             </when>
             <otherwise>
@@ -17,43 +22,78 @@
                 date_format(c_time,'%H:%i') time
             </otherwise>
         </choose>
-        from t_f5_vs_stat where  c_time >= #{startTime}
-        <if test="deviceIp!=null">
-        and device_ip = #{deviceIp}
+        from t_f5_vs_stat where c_time >= #{startTime}
+        <if test="vsName!=null">
+            and vs_name = #{vsName}
         </if>
-        group by vs_name
         <if test="deviceIp!=null">
-            ,device_ip
+            and device_ip = #{deviceIp}
         </if>
-        ,time
+        <choose>
+        <when test="deviceIp!=null">
+            group by vs_name,time
+        </when>
+        <otherwise>
+            group by time
+        </otherwise>
+        </choose>
+
     </select>
-    <select id="getRequestFail" resultType="map">
+    <select id="getRequestFail" resultType="map" parameterType="java.lang.String">
         select count(id) count, client_ip,virtual_name,virtual_ip,virtual_pool_name,virtual_port,server_ip,server_port
         from t_request_log
         where insert_time >=#{startTime} and  http_statcode >=399
         group by client_ip
     </select>
 
-    <select id="getRequestSuccess" resultType="map">
-        select count(id) count,
-        client_ip,
-        virtual_name,
-        virtual_ip,
-        virtual_pool_name,
-        virtual_port,
-        server_ip,
-        server_port,
-        avg(response_time) response_time,
-        sum(response_size)/1024/8 response_size
+    <select id="getRequestSuccess" resultType="map" parameterType="java.lang.String">
+        select
+            count(id) count,
+            client_ip,
+            virtual_name,
+            virtual_ip,
+            virtual_pool_name,
+            virtual_port,
+            server_ip,
+            server_port,
+            avg(response_time) response_time,
+            sum(response_size)/1024/8 response_size,
+            case
+            when http_statcode >=399 then 2
+            else 2
+            end status
         from t_request_log
-        where insert_time >=#{startTime} and  http_statcode &lt;= 399
+        where insert_time >=#{startTime}
+        <if test="vsName!=null">
+            and virtual_name = #{vsName}
+        </if>
         group by client_ip
     </select>
-    
-    <select id="getRequestRate" resultType="map">
+
+    <select id="getRequestRate" resultType="map" parameterType="java.lang.String">
         select virtual_name,avg(success_rate) success_rate
         from t_f5_access_status
         where c_time >=#{startTime}
+         <if test="vsName!=null">
+             and virtual_name = #{vsName}
+         </if>
         group by virtual_name
+    </select>
+
+
+    <select id="getVsRate" resultType="map">
+        select i.vs_name,
+        case
+        when r.success_rate is NULL then 'N/A'
+        else r.success_rate
+        end success_rate
+        from t_f5_vs_info i
+        left join
+        ( select virtual_name,avg(success_rate) success_rate from t_f5_access_status
+        where c_time >= #{startTime}  group by virtual_name ) r
+        on i.vs_name = r.virtual_name
+        <if test="deviceIp!=null">
+            where i.device_ip = #{deviceIp}
+        </if>
     </select>
 </mapper>

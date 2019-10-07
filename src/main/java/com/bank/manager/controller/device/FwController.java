@@ -66,12 +66,12 @@ public class FwController {
         }
     }
 
-    @RequestMapping(value = "/api/device/fw/top/threat/{type}/{deviceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/device/fw/top/user/{type}/{deviceId}", method = RequestMethod.GET)
     public JsonResult getTop10Threat(@PathVariable("type") long type, @PathVariable("deviceId") long deviceId) {
         String startTime = getStartTime(type);
         String deviceIp = getDeviceIp(deviceId);
         if (startTime != null) {
-            return JsonResult.success(fwService.getTop10Threat(startTime, deviceIp));
+            return JsonResult.success(fwService.getTop10User(startTime, deviceIp));
         } else {
             return JsonResult.fail(404, "变量错误");
         }
@@ -95,8 +95,10 @@ public class FwController {
             return CommonUtils.getBeforeTime(-60);
         } else if (type == 2) { //2小时
             return CommonUtils.getBeforeTime(-120);
-        } else if (type == 3) {  //一天
-            return CommonUtils.getBeforeTime(-1440);
+        } else if (type == 3) {  //4小时
+            return CommonUtils.getBeforeTime(-240);
+        } else if (type == 4) {  //一天
+            return CommonUtils.getToday();
         } else {
             return null;
         }

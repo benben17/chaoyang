@@ -18,10 +18,10 @@ public class Device {
     //1软墙 2 硬墙
     private long deviceType;
     // 集群热备
-    private String deviceStat;
+    private long deviceStat;
 
-    //启用 、禁用
-    private String deviceStatus;
+    //1启用 、2禁用
+    private long deviceStatus;
     private String userName;
     private String password;
     private long createUid;

@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bank.manager.dao.device.FwDao">
 
-    <select id="getAttackNum" resultType="map" >
-         select sum(attack_num) attackNum from t_threat where  c_time >= #{startTime}
+    <select id="getAttackNum" resultType="map">
+        select sum(attack_num) attackNum,date_format(c_time,'%H:%i') time
+        from t_threat where c_time >= #{startTime}
         <if test="deviceIp!=null">
             and device_ip = #{deviceIp}
         </if>
+        group by time
 
     </select>
 
@@ -24,7 +26,7 @@
         when severity = "中" then 2
         when severity = "高" then 3
         when severity = "严重" then 4
-        end  as threatLevel
+        end as threatLevel
         from t_threat where c_time >=#{startTime}
         <if test="deviceIp!=null">
             and device_ip = #{deviceIp}
@@ -41,14 +43,15 @@
         </if>
         group by ymd
     </select>
-    <select id="getTop10Threat" resultType="map">
-        select date_format(end_time,'%Y-%m-%d %H:%i%S') endTime,name ip,sum(attack_num) attackNum
-        from t_threat where
+    <select id="getTop10User" resultType="map">
+        select sum(total_stream) totalStream,user userIp
+        from t_user_rank where
         c_time >= #{startTime}
         <if test="deviceIp!=null">
             and device_ip = #{deviceIp}
         </if>
-        group by sip;
+        group by user
+        order by totalStream desc limit 10
     </select>
     <select id="getTop10App" resultType="map">
         select sum(total_stream) totalStream ,app_type appType,app_sub_type subType,app_name appName
@@ -58,6 +61,6 @@
             and device_ip = #{deviceIp}
         </if>
         group by app_type,app_sub_type
-        order by total_stream desc;
+        order by total_stream desc limit 10
     </select>
 </mapper>
