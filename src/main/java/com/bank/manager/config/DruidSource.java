@@ -21,7 +21,7 @@ import com.alibaba.druid.pool.DruidDataSource;
  */
 @Component
 @ConfigurationProperties(prefix = "spring.druid")
-@Configuration
+//@Configuration
 public class DruidSource {
     private String dbUrl;
 

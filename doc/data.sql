@@ -193,6 +193,15 @@ CREATE TABLE `t_f5_access_status` (
 )
 
 
+CREATE TABLE `t_sso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) DEFAULT '' comment '用户名',
+  `password` varchar(32) DEFAULT '' comment '密码',
+  `ip_address`  varchar(32) DEFAULT '' comment '登陆IP地址',
+  `c_time` datetime DEFAULT NULL,
+   PRIMARY KEY (`id`),
+  KEY `ip_address` (`ip_address`)
+)
 
 
 

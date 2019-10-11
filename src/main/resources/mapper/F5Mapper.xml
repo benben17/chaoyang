@@ -48,21 +48,23 @@
 
     <select id="getRequestSuccess" resultType="map" parameterType="java.lang.String">
         select
-            count(id) count,
-            client_ip,
-            virtual_name,
-            virtual_ip,
-            virtual_pool_name,
-            virtual_port,
-            server_ip,
-            server_port,
-            avg(response_time) response_time,
-            sum(response_size)/1024/8 response_size,
+            b.bank_name,
+            count(l.id) count,
+            l.client_ip,
+            l.virtual_name,
+            l.virtual_ip,
+            l.virtual_pool_name,
+            l.virtual_port,
+            l.server_ip,
+            l.server_port,
+            avg(l.response_time) response_time,
+            sum(l.response_size)/1024/8 response_size,
             case
-            when http_statcode >=399 then 2
+            when l.http_statcode >=399 then 2
             else 2
             end status
-        from t_request_log
+        from t_request_log l left join t_banks b
+        on l.bank_id =b.id
         where insert_time >=#{startTime}
         <if test="vsName!=null">
             and virtual_name = #{vsName}
