@@ -39,11 +39,12 @@ public class SsoController {
     }
 
     @RequestMapping(value = "/api/sso", method = RequestMethod.GET)
-    public JsonResult getSso(@RequestBody Sso sso) {
+    public JsonResult getSso() {
         String ipAddress = NetworkUtils.getIpAddress(request);
 
-
-        return JsonResult.success(ssoService.getUserInfo(ipAddress));
+        Sso ssoUserInfo = ssoService.getUserInfo(ipAddress);
+        ssoService.deleteUserInfo(ipAddress);
+        return JsonResult.success(ssoUserInfo);
 
 
     }

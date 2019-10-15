@@ -9,7 +9,7 @@
         <result column="c_time" property="createTime"/>
     </resultMap>
 
-    <insert id="saveUserInfo" parameterType="Sso">
+    <insert id="insertUserInfo" parameterType="Sso">
         insert into t_sso (username,password,c_time,ip_address)
         values(#{userName},#{password},#{createTime},#{ipAddress})
     </insert>
@@ -34,4 +34,8 @@
         where ip_address = #{ipAddress}
         order by id desc limit 1
     </select>
+    <delete id="deleteUserInfo" parameterType="java.lang.String">
+        delete from t_sso
+        where ip_address = #{ip_Address}
+    </delete>
 </mapper>

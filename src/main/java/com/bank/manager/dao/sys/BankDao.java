@@ -11,7 +11,7 @@ public interface BankDao {
 
     long updateBank(Bank bank);
 
-    List<Device> getBankList();
+    List<Bank> getBankList();
 
     void deleteBank(List<Long> bankIds);
 

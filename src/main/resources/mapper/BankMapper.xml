@@ -6,7 +6,8 @@
         <result column="bank_name" property="bankName"/>
         <result column="level" property="level"/>
         <result column="address" property="address"/>
-        <result column="ip_address" property="ipAddress"/>
+        <result column="start_ip" property="startIp"/>
+        <result column="end_ip" property="endIp"/>
         <result column="lng" property="lng"/>
         <result column="lat" property="lat"/>
         <result column="c_time" property="createTime"/>
@@ -16,11 +17,11 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-		id, `bank_name`,address,ip_address,lng,lat,c_time,c_uid,e_time,e_uid
+		id, `bank_name`,address,start_ip,end_ip,lng,lat,c_time,c_uid,e_time,e_uid
 	</sql>
     <insert id="saveBank" useGeneratedKeys="true" keyProperty="id">
-        insert into t_banks (`bank_name`,address,ip_address,lng,lat,c_time,c_uid)
-        values(#{bankName},#{address},#{ipAddress},#{lng},#{lat},#{createTime},#{createUid})
+        insert into t_banks (`bank_name`,address,start_ip,end_ip,lng,lat,c_time,c_uid)
+        values(#{bankName},#{address},#{startIp},#{endIp},#{lng},#{lat},#{createTime},#{createUid})
     </insert>
 
 
@@ -32,8 +33,11 @@
         <if test="address!=null">
             address = #{address},
         </if>
-        <if test="ipAddress!=null">
-            ip_address = #{ipAddress},
+        <if test="startIp!=null">
+            start_ip = #{startIp},
+        </if>
+        <if test="endIp!=null">
+            end_ip = #{endIp},
         </if>
         <if test="lng!=null">
             lng = #{lng},
@@ -57,7 +61,7 @@
         <include refid="Base_Column_List"/>
         from t_banks
     </select>
-    <delete id="deleteDevice" parameterType="java.util.List">
+    <delete id="deleteBank" parameterType="java.util.List">
         delete from t_banks
         where id in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
@@ -67,7 +71,10 @@
 
     <select id="checkRepeat" resultType="INTEGER" parameterType="Device">
         select count(id) from t_banks
-        where bank_name=#{bankName}  and id !=#{id}
+        where bank_name=#{bankName}
+        and start_ip = #{startIp}
+        and end_ip = #{endIp}
+        and id !=#{id}
     </select>
 
 

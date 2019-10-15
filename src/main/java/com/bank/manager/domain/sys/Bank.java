@@ -14,9 +14,10 @@ public class Bank {
     private String bankName;
     private long level;
     private String address;
-    private  String ipAddress;
+    private String startIp;
+    private String endIp;
     private String lng;
-    private  String lat;
+    private String lat;
     private long createUid;
     private long editUid;
     private Date createTime;

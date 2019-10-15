@@ -8,7 +8,7 @@ import lombok.Setter;
 public class Sso {
 
     long id;
-    String username;
+    String userName;
     String password;
     String ipAddress;
     String createTime;

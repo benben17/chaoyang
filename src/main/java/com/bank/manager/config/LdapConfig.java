@@ -69,7 +69,6 @@ public class LdapConfig {
 
         //  解决 乱码 的关键一句
         config.put("java.naming.ldap.attributes.binary", "objectGUID");
-
         contextSource.setPooled(true);
         contextSource.setBaseEnvironmentProperties(config);
         return contextSource;

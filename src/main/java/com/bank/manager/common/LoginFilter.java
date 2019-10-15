@@ -38,7 +38,7 @@ public class LoginFilter implements Filter {
 
         HttpServletResponse res = (HttpServletResponse) response;
         HttpServletRequest reqs = (HttpServletRequest) request;
-        res.setHeader("Access-Control-Allow-Origin","*");
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "PUT,DELETE,POST,GET,OPTIONS");
         res.setHeader("Access-Control-Max-Age", "3600");
@@ -53,10 +53,18 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
         String requestURI = httpServletRequest.getRequestURI();
-        if (requestURI.endsWith("/api/login")) {
+        if (requestURI.endsWith("/api/login")){
             chain.doFilter(request, response);
             return;
         }
+        if (requestURI.endsWith("/api/sso")) {
+            System.out.println(httpServletRequest.getMethod());
+            if (httpServletRequest.getMethod().equals("GET")) {
+                chain.doFilter(request, response);
+                return;
+            }
+        }
+
 
         String authorization = httpServletRequest.getHeader("AUTH");
         if (StringUtils.isEmpty(authorization)) {

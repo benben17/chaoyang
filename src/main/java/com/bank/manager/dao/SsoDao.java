@@ -8,4 +8,6 @@ public interface SsoDao {
     long insertUserInfo(Sso sso);
     long updateUserInfo(Sso sso);
 
+    void deleteUserInfo(String ipAddress);
+
 }
